@@ -1,13 +1,17 @@
 package me.dentaloffice.model;
+public enum UserRole {
 
-public class UserRole {
-    private int id;
-    private String name;
+    SCHEDULED("superadmin"),
+    COMPLETED("admin"),
+    CANCELLED("user");
 
-    public UserRole() {}
+    private final String value;
 
-    public UserRole(int id, String name) {
-        this.id = id;
-        this.name = name;
+    UserRole(String value){
+        this.value = value;
+    }
+
+    public String getValue(){
+        return value;
     }
 }

@@ -1,8 +1,14 @@
 package me.dentaloffice.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "dentists")
 public class Dentist {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String jmbg;
     private String name;
@@ -10,7 +16,15 @@ public class Dentist {
     private String specialization;
     private String phone;
     private String email;
+
+    @ManyToMany
+    @JoinTable(
+            name = "dentists_patients",
+            joinColumns = @JoinColumn(name = "dentist_id"),
+            inverseJoinColumns = @JoinColumn(name = "patient_id")
+    )
     private List<Patient> patients;
+    @OneToMany(mappedBy = "dentist", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Checkup> checkups;
 
     public Dentist() {}

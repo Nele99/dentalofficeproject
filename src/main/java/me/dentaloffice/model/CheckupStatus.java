@@ -1,13 +1,17 @@
 package me.dentaloffice.model;
+public enum CheckupStatus {
 
-public class CheckupStatus {
-    private int id;
-    private String name;
+    SCHEDULED("scheduled"),
+    COMPLETED("completed"),
+    CANCELLED("canceled");
 
-    public CheckupStatus() {}
+    private final String value;
 
-    public CheckupStatus(int id, String name) {
-        this.id = id;
-        this.name = name;
+    CheckupStatus(String value){
+        this.value = value;
+    }
+
+    public String getValue(){
+        return value;
     }
 }
