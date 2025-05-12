@@ -1,9 +1,13 @@
 package me.dentaloffice.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class User {
@@ -26,17 +30,4 @@ public class User {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
-    public User() {}
-
-    public User(int id, String username, String email, String passwordHash, UserRole role, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime lastLogin) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.role = role;
-        this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.lastLogin = lastLogin;
-    }
 }

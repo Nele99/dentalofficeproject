@@ -1,9 +1,14 @@
 package me.dentaloffice.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
-
+import java.util.Set;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "dentists")
 public class Dentist {
@@ -17,27 +22,14 @@ public class Dentist {
     private String phone;
     private String email;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.LAZY)
     @JoinTable(
             name = "dentists_patients",
             joinColumns = @JoinColumn(name = "dentist_id"),
             inverseJoinColumns = @JoinColumn(name = "patient_id")
     )
-    private List<Patient> patients;
-    @OneToMany(mappedBy = "dentist", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private Set<Patient> patients;
+    @OneToMany(mappedBy = "dentist", cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Checkup> checkups;
 
-    public Dentist() {}
-
-    public Dentist(int id, String jmbg, String name, String surname, String specialization, String phone, String email, List<Patient> patients, List<Checkup> checkups) {
-        this.id = id;
-        this.jmbg = jmbg;
-        this.name = name;
-        this.surname = surname;
-        this.specialization = specialization;
-        this.phone = phone;
-        this.email = email;
-        this.patients = patients;
-        this.checkups = checkups;
-    }
 }

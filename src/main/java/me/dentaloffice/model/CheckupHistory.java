@@ -1,10 +1,14 @@
 package me.dentaloffice.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "checkup_history")
 public class CheckupHistory {
@@ -26,16 +30,4 @@ public class CheckupHistory {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    public CheckupHistory() {}
-
-    public CheckupHistory(int id, Checkup checkup, Patient patient, Dentist dentist, CheckupType type, String description, LocalDateTime createdAt, BigDecimal totalPrice) {
-        this.id = id;
-        this.checkup = checkup;
-        this.patient = patient;
-        this.dentist = dentist;
-        this.type = type;
-        this.description = description;
-        this.createdAt = createdAt;
-        this.totalPrice = totalPrice;
-    }
 }
