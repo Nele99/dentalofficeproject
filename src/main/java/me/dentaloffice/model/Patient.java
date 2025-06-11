@@ -1,6 +1,5 @@
 package me.dentaloffice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,12 +31,10 @@ public class Patient {
     @Column(name = "status_id")
     private PatientStatus status_id ;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "patient",cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "patient",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Checkup> checkups;
 
-    @OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Telephone> telephones;
 
 }

@@ -1,7 +1,13 @@
 package me.dentaloffice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table(name = "checkups")
 public class Checkup {
@@ -17,9 +24,11 @@ public class Checkup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dentist_id", nullable = true)
     private Dentist dentist;
 
     private LocalDate date;
@@ -33,6 +42,7 @@ public class Checkup {
     private CheckupStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id", nullable = true)
     private CheckupType type;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -41,6 +51,7 @@ public class Checkup {
             joinColumns = @JoinColumn(name = "checkup_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
+    @JsonIgnore
     private List<Service> services;
 
 }

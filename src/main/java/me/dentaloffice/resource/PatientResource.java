@@ -22,7 +22,7 @@ public class PatientResource {
 @Transactional
 @Path("addPatient")
     public Response createPatient( Patient patient){
-       Patient p = patientRepository.createPatient(patient);
+    Patient p = patientRepository.createPatient(patient);
     return Response.status(Response.Status.CREATED).entity(p).build();
     }
 

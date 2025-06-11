@@ -4,8 +4,8 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import me.dentaloffice.model.Checkup;
 import me.dentaloffice.model.Patient;
-import me.dentaloffice.model.Telephone;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ public class PatientRepository {
 
     @Transactional
     public Patient createPatient(Patient p) {
-        if (p.getTelephones() != null) {
-            for (Telephone telephone : p.getTelephones()) {
-                telephone.setPatient(p);
+        if (p.getCheckups() != null) {
+            for (Checkup checkup : p.getCheckups()) {
+                checkup.setPatient(p);
             }
         }
         em.persist(p);
@@ -29,19 +29,9 @@ public class PatientRepository {
 
     @Transactional
     public List<Patient> getAllPatients() {
-        List<Patient> patients = em.createQuery("SELECT p FROM Patient p", Patient.class).getResultList();
-
-        for (Patient patient : patients) {
-            List<Telephone> telephones = em.createQuery("SELECT t FROM Telephone t WHERE t.patient.id = :id", Telephone.class)
-                    .setParameter("id", patient.getId())
-                    .getResultList();
-            patient.setTelephones(telephones);
-
-        }
-
-        return patients;
+        return em.createQuery("SELECT p FROM Patient p LEFT JOIN FETCH p.checkups", Patient.class)
+                .getResultList();
     }
-
 
     }
 
