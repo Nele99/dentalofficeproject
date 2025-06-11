@@ -9,7 +9,6 @@ import me.dentaloffice.model.Patient;
 
 import java.util.List;
 
-
 @Dependent
 public class PatientRepository {
 
@@ -33,5 +32,13 @@ public class PatientRepository {
                 .getResultList();
     }
 
+    // Dodaj ove metode za file operacije
+    public Patient findById(int id) {
+        return em.find(Patient.class, id);
     }
 
+    @Transactional
+    public Patient updatePatient(Patient patient) {
+        return em.merge(patient);
+    }
+}

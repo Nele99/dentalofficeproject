@@ -1,5 +1,6 @@
 package me.dentaloffice.model;
 
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,12 +31,15 @@ public class Patient {
     private String address;
     @Enumerated(EnumType.STRING)
     @Column(name = "status_id")
-    private PatientStatus status_id ;
+    private PatientStatus status_id;
 
+    @Column(name = "file_path")
+    private String filePath;
 
-    @OneToMany(mappedBy = "patient",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+    @Transient
+    private byte[] fileData;
+
+    @OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Checkup> checkups;
-
-
 }
