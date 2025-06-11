@@ -1,7 +1,6 @@
 package me.dentaloffice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -51,7 +50,7 @@ public class Checkup {
             joinColumns = @JoinColumn(name = "checkup_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    @JsonIgnore
+   // @JsonIgnore
     private List<Service> services;
 
 }
